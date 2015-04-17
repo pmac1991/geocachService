@@ -13,8 +13,6 @@ msgLabel = new JLabel("")
 frame.contentPane.add positionLabel
 frame.contentPane.add msgLabel
 
-stackLabel = new JLabel("")
-
 float currentDispValue = 0.0;
 String tempValue = '';
 boolean mode = false; //false bez kropki true kropka zostala nacisnieta
@@ -55,8 +53,6 @@ frame.contentPane.add button_open
 frame.contentPane.add button_close
 frame.contentPane.add button_point
 frame.contentPane.add button_equal
-frame.contentPane.add stackLabel
-
 
 button_plus.addActionListener(
         {
@@ -109,28 +105,6 @@ button_point.addActionListener(
                 mode = true;
                 tempValue = tempValue.concat('.');
             }
-            positionLabel.setText(currentDispValue.toString());
-        } as ActionListener
-)
-
-button_close.addActionListener(
-        {
-        	stack.add(currentDispValue);
-            stack.add(")");
-            currentDispValue = 0.0;
-            tempValue = '';
-            mode = false;
-            positionLabel.setText(currentDispValue.toString());
-        } as ActionListener
-)
-
-button_open.addActionListener(
-        {
-        	stack.add(currentDispValue);
-            stack.add("(");
-            currentDispValue = 0.0;
-            tempValue = '';
-            mode = false;
             positionLabel.setText(currentDispValue.toString());
         } as ActionListener
 )
