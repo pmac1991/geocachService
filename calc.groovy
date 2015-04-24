@@ -34,6 +34,9 @@ for(int i=0;i < 9; i++)
 
                 currentDispValue = Float.parseFloat(tempValue);
                 positionLabel.setText(currentDispValue.toString());
+                
+                
+                
             } as ActionListener
     )
 };
@@ -57,48 +60,179 @@ frame.contentPane.add button_point
 frame.contentPane.add button_equal
 frame.contentPane.add stackLabel
 
+boolean wait = false;
+
+void hReduce()
+{
+	
+}
 
 button_plus.addActionListener(
         {
             stack.add(currentDispValue);
-            stack.add("+");
+            
             currentDispValue = 0.0;
+            
+            if((stack[stack.size() - 2] == "+" || stack[stack.size() - 2] == "-")&& stack.size() >= 3)
+            {
+            	String text = "";
+                for(int k=0;k < stack.size();k++)
+                {
+                    text = text + stack[k].toString();
+                }
+            	
+            	def tempList = [];
+            	tempList.add(Eval.me(text));
+            	stack = tempList;
+            }
+            
+            if((stack[stack.size() - 2] == "*" || stack[stack.size() - 2] == "/")&& stack.size() >= 3)
+			{
+				String text = "";
+				for(int k=(stack.size() - 3);k < stack.size();k++)
+				{
+					text = text + stack[k].toString();
+				}
+					
+				stack.remove(stack.size()-1);
+				stack.remove(stack.size()-1);
+				stack.remove(stack.size()-1);
+				stack.add(Eval.me(text));
+				
+			    String tempText = " ";
+				for(int k=0;k < stack.size();k++)
+                {
+                    tempText = tempText + stack[k].toString();
+                }
+                
+                stack.remove(stack.size()-1);
+				stack.remove(stack.size()-1);
+				stack.remove(stack.size()-1);
+				stack.add(Eval.me(tempText));
+			}
+            
+            
+            stack.add("+");
             tempValue = '';
             mode = false;
-            positionLabel.setText(currentDispValue.toString());
+            positionLabel.setText(stack[0].toString());
         } as ActionListener
 )
 
 button_minus.addActionListener(
         {
             stack.add(currentDispValue);
+            
+            if((stack[stack.size() - 2] == "+" || stack[stack.size() - 2] == "-")&& stack.size() >= 3)
+            {
+            	String text = "";
+                for(int k=0;k < stack.size();k++)
+                {
+                    text = text + stack[k].toString();
+                }
+            	
+            	def tempList = [];
+            	tempList.add(Eval.me(text));
+            	stack = tempList;
+            }
+            
+            if((stack[stack.size() - 2] == "*" || stack[stack.size() - 2] == "/")&& stack.size() >= 3)
+			{
+				String text = "";
+				for(int k=(stack.size() - 3);k < stack.size();k++)
+				{
+					text = text + stack[k].toString();
+				}
+					
+				stack.remove(stack.size()-1);
+				stack.remove(stack.size()-1);
+				stack.remove(stack.size()-1);
+				stack.add(Eval.me(text));
+				
+				String tempText = " ";
+				for(int k=0;k < stack.size();k++)
+                {
+                    tempText = tempText + stack[k].toString();
+                }
+                
+                stack.remove(stack.size()-1);
+				stack.remove(stack.size()-1);
+				stack.remove(stack.size()-1);
+				stack.add(Eval.me(tempText));
+				
+				
+			}
+            
+            
             stack.add("-");
             currentDispValue = 0.0;
             tempValue = '';
             mode = false;
-            positionLabel.setText(currentDispValue.toString());
+            positionLabel.setText(stack[0].toString());
         } as ActionListener
 )
 
 button_mul.addActionListener(
         {
             stack.add(currentDispValue);
+            
+            if((stack[stack.size() - 2] == "*" || stack[stack.size() - 2] == "/")&& stack.size() >= 3)
+            {
+            	String text = "";
+                for(int k=0;k < stack.size();k++)
+                {
+                    text = text + stack[k].toString();
+                }
+            	
+            	def tempList = [];
+            	tempList.add(Eval.me(text));
+            	stack = tempList;
+            }
+            
+            if((stack[stack.size() - 2] == "+" || stack[stack.size() - 2] == "-")&& stack.size() >= 3)
+			{
+			   
+			}
+            
+            
             stack.add("*");
             currentDispValue = 0.0;
             tempValue = '';
             mode = false;
-            positionLabel.setText(currentDispValue.toString());
+            positionLabel.setText(stack[0].toString());
         } as ActionListener
 )
 
 button_div.addActionListener(
         {
             stack.add(currentDispValue);
+            
+            if((stack[stack.size() - 2] == "*" || stack[stack.size() - 2] == "/")&& stack.size() >= 3)
+            {
+            	String text = "";
+                for(int k=0;k < stack.size();k++)
+                {
+                    text = text + stack[k].toString();
+                }
+            	
+            	def tempList = [];
+            	tempList.add(Eval.me(text));
+            	stack = tempList;
+            }
+            
+            if((stack[stack.size() - 2] == "+" || stack[stack.size() - 2] == "-")&& stack.size() >= 3)
+			{
+
+			}
+			
+			
+            
+            
             stack.add("/");
             currentDispValue = 0.0;
             tempValue = '';
             mode = false;
-            positionLabel.setText(currentDispValue.toString());
+            positionLabel.setText(stack[0].toString());
         } as ActionListener
 )
 
@@ -171,3 +305,5 @@ for (event in events) {
 }
 
 frame.show()
+
+
