@@ -33,7 +33,10 @@ for(int i=0;i < 9; i++)
                 tempValue = tempValue.concat(j.toString());
 
                 currentDispValue = Float.parseFloat(tempValue);
+                
+                stack.add(currentDispValue);
                 positionLabel.setText(currentDispValue.toString());
+                stackLabel.setText(stack.toString());
                 
                 
                 
@@ -69,7 +72,7 @@ void hReduce()
 
 button_plus.addActionListener(
         {
-            stack.add(currentDispValue);
+            //stack.add(currentDispValue);
             
             currentDispValue = 0.0;
             
@@ -116,12 +119,13 @@ button_plus.addActionListener(
             tempValue = '';
             mode = false;
             positionLabel.setText(stack[0].toString());
+            stackLabel.setText(stack.toString());
         } as ActionListener
 )
 
 button_minus.addActionListener(
         {
-            stack.add(currentDispValue);
+            //stack.add(currentDispValue);
             
             if((stack[stack.size() - 2] == "+" || stack[stack.size() - 2] == "-")&& stack.size() >= 3)
             {
@@ -169,12 +173,13 @@ button_minus.addActionListener(
             tempValue = '';
             mode = false;
             positionLabel.setText(stack[0].toString());
+            stackLabel.setText(stack.toString());
         } as ActionListener
 )
 
 button_mul.addActionListener(
         {
-            stack.add(currentDispValue);
+            //stack.add(currentDispValue);
             
             if((stack[stack.size() - 2] == "*" || stack[stack.size() - 2] == "/")&& stack.size() >= 3)
             {
@@ -200,12 +205,13 @@ button_mul.addActionListener(
             tempValue = '';
             mode = false;
             positionLabel.setText(stack[0].toString());
+            stackLabel.setText(stack.toString());
         } as ActionListener
 )
 
 button_div.addActionListener(
         {
-            stack.add(currentDispValue);
+            //stack.add(currentDispValue);
             
             if((stack[stack.size() - 2] == "*" || stack[stack.size() - 2] == "/")&& stack.size() >= 3)
             {
@@ -233,6 +239,7 @@ button_div.addActionListener(
             tempValue = '';
             mode = false;
             positionLabel.setText(stack[0].toString());
+            stackLabel.setText(stack.toString());
         } as ActionListener
 )
 
@@ -249,29 +256,67 @@ button_point.addActionListener(
 
 button_close.addActionListener(
         {
-        	stack.add(currentDispValue);
+        //	stack.add(currentDispValue);
             stack.add(")");
             currentDispValue = 0.0;
             tempValue = '';
             mode = false;
-            positionLabel.setText(currentDispValue.toString());
+            
+
+            int l = 0;
+            String text = " ";
+            
+            String debug = " ";
+            
+
+            
+            for(int k = (stack.size()-1);k>=0;k--)
+            {
+            	debug = debug + "jestem w 1 pet";
+            	if(stack[k] == "(")
+            	{
+            		l = k;
+            		for(int j =k ; j < stack.size();j++)
+            		{
+            			text = text + stack[j].toString();
+            			
+            		}
+            		break;
+            	}
+            }
+            
+            int stackTemp = stack.size();
+           
+            for(int z = l;z<stackTemp;z++)
+            {
+            	
+            	stack.remove(stack.size()-1);
+            }
+            
+            stack.add(Eval.me(text).toString());
+            
+            //stackLabel.setText(l.toString());
+            
+            positionLabel.setText(stack[0].toString());
+            stackLabel.setText(stack.toString());
         } as ActionListener
 )
 
 button_open.addActionListener(
         {
-        	stack.add(currentDispValue);
+        //	stack.add(currentDispValue);
             stack.add("(");
             currentDispValue = 0.0;
             tempValue = '';
             mode = false;
             positionLabel.setText(currentDispValue.toString());
+            stackLabel.setText(stack.toString());
         } as ActionListener
 )
 
 button_equal.addActionListener(
         {
-            stack.add(currentDispValue);
+     //       stack.add(currentDispValue);
             String text = "";
             for(int k=0;k < stack.size();k++)
             {
@@ -283,6 +328,7 @@ button_equal.addActionListener(
             currentDispValue = 0.0;
             tempValue = '';
             positionLabel.setText(Eval.me(text).toString());
+            stackLabel.setText(stack.toString());
 
         } as ActionListener
 )
