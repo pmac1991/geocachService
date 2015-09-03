@@ -87,10 +87,18 @@ class GeocatchController {
         }
     }
 	
-	def markAdVisited(Geocatch geocatchInstance){
-		def user = springSecurityService.currentUser
+	@Transactional
+	def markAsVisited(Geocatch geocatchInstance){
+		def currUser = springSecurityService.currentUser
 	
-		geocatchInstance.visitors.add(user)
+		geocatchInstance.addToVisitors(currUser)
+		geocatchInstance.save() //flush:true
+		
+		render geocatchInstance.visitors
+		
+		//user.addToVisitedPlaces(geocatchInstance)
+		
+		//user.save flush:true
 	}
 
     @Transactional

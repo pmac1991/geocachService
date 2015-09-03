@@ -15,8 +15,7 @@ class Geocatch {
 	User author
 	
 	static belongsTo = User
-	//static belongsTo = [author: User]
-	
+
 	static hasMany = [visitors: User]
 
     static constraints = {

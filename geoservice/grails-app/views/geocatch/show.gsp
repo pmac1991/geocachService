@@ -100,6 +100,7 @@
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${geocatchInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+					<g:link action="markAsVisited"><input type="button" value="Mark as visited" class="button"/></g:link>
 				</fieldset>
 			</g:form>
 		</div>

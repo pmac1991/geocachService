@@ -11,7 +11,7 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 	
-	static hasMany = [geocatches: Geocatch, visitedPlaces: Geocatch]
+	//static hasMany = [geocatches: Geocatch,[ visitedPlaces: Geocatch]
 
 	static transients = ['springSecurityService']
 
@@ -21,9 +21,9 @@ class User {
 		accountExpired display: false
 		accountLocked	display: false
 		passwordExpired	display: false
-		geocatches display: false
+		//geocatches display: false
 		enabled display: false
-		visitedPlaces display: false
+		//visitedPlaces display: false
 	}
 
 	static mapping = {
