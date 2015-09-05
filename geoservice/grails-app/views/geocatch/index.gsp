@@ -34,7 +34,7 @@
 					
 						<th><g:message code="geocatch.author.label" default="Author" /></th>
 					
-						<g:sortableColumn property="lat" title="${message(code: 'geocatch.lat.label', default: 'Lat')}" />
+						<g:sortableColumn property="radius" title="${message(code: 'geocatch.radius.label', default: 'Radius')}" />
 					
 					</tr>
 				</thead>
@@ -52,7 +52,7 @@
 					
 						<td>${fieldValue(bean: geocatchInstance, field: "author")}</td>
 					
-						<td>${fieldValue(bean: geocatchInstance, field: "lat")}</td>
+						<td>${fieldValue(bean: geocatchInstance, field: "radius")}</td>
 					
 					</tr>
 				</g:each>

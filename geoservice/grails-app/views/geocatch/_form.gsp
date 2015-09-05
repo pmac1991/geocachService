@@ -34,6 +34,14 @@
 	<input type="file" id="picture" name="picture" />
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: geocatchInstance, field: 'radius', 'error')} required">
+	<label for="radius">
+		<g:message code="geocatch.radius.label" default="Radius" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="radius" type="number" min="1" max="50" value="${geocatchInstance.radius}" required=""/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: geocatchInstance, field: 'lat', 'error')} required">
 	<label for="lat">
 		<g:message code="geocatch.lat.label" default="Lat" />

@@ -77,6 +77,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${geocatchInstance?.radius}">
+				<li class="fieldcontain">
+					<span id="radius-label" class="property-label"><g:message code="geocatch.radius.label" default="Radius" /></span>
+					
+						<span class="property-value" aria-labelledby="radius-label"><g:fieldValue bean="${geocatchInstance}" field="radius"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${geocatchInstance?.lat}">
 				<li class="fieldcontain">
 					<span id="lat-label" class="property-label"><g:message code="geocatch.lat.label" default="Lat" /></span>
@@ -100,7 +109,7 @@
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${geocatchInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-					<g:link action="markAsVisited"><input type="button" value="Mark as visited" class="button"/></g:link>
+					<g:link class="markAsVisited" action="markAsVisited" resource="${geocatchInstance}"><input type="button" value="Mark as visited" class="button"/></g:link>	
 				</fieldset>
 			</g:form>
 		</div>

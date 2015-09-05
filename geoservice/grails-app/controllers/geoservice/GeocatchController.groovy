@@ -47,8 +47,6 @@ class GeocatchController {
 		
 		def user = springSecurityService.currentUser
 		
-		geocatchInstance.author = user
-
         geocatchInstance.save flush:true
 
         request.withFormat {
@@ -92,9 +90,11 @@ class GeocatchController {
 		def currUser = springSecurityService.currentUser
 	
 		geocatchInstance.addToVisitors(currUser)
-		geocatchInstance.save() //flush:true
+		geocatchInstance.save flush:true
 		
-		render geocatchInstance.visitors
+		render geocatchInstance.author
+		
+		
 		
 		//user.addToVisitedPlaces(geocatchInstance)
 		

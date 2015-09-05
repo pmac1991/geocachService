@@ -9,6 +9,8 @@ class Geocatch {
 	
 	String address
 	
+	int radius
+	
 	double	lat 
 	double	lon
 	
@@ -26,5 +28,6 @@ class Geocatch {
 		author nullable: false, display: false
 		visitors nullable: true, display: false
 		author display: false, nullable: true
+		radius nullable: true, max: 50, min: 1
     }
 }
