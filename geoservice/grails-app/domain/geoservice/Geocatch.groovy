@@ -23,7 +23,7 @@ class Geocatch {
     static constraints = {
 	    title blank: false, unique: true
 		description blank: false
-		address blank: true
+		address blank: true, nullable: true
 		picture nullable: true, maxSize: 32768
 		author nullable: false, display: false
 		visitors nullable: true, display: false

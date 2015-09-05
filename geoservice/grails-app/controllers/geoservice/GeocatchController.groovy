@@ -20,7 +20,10 @@ class GeocatchController {
     }
 
     def show(Geocatch geocatchInstance) {
-        respond geocatchInstance
+		def currUser = springSecurityService.currentUser
+	
+        //respond geocatchInstance, currUser
+		[geocatchInstance: geocatchInstance, currUser: currUser]
     }
 
     def create() {
@@ -41,11 +44,17 @@ class GeocatchController {
 		
 		def point =  geocoderService.findAddress(geocatchInstance.address)
 		
-		geocatchInstance.lat = point.lat
+		if(point != null){
 		
-		geocatchInstance.lon = point.lng
+			geocatchInstance.lat = point.lat
 		
+			geocatchInstance.lon = point.lng
+		
+		}
+
 		def user = springSecurityService.currentUser
+		
+		geocatchInstance.author = user;
 		
         geocatchInstance.save flush:true
 
@@ -94,11 +103,6 @@ class GeocatchController {
 		
 		render geocatchInstance.author
 		
-		
-		
-		//user.addToVisitedPlaces(geocatchInstance)
-		
-		//user.save flush:true
 	}
 
     @Transactional

@@ -6,6 +6,13 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'geocatch.label', default: 'Geocatch')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
+		<style>
+		#map {
+			height: 100%;
+		}
+		</style>
+  </head>
+
 	</head>
 	<body>
 		<a href="#show-geocatch" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -61,7 +68,7 @@
 				<li class="fieldcontain">
 					<span id="author-label" class="property-label"><g:message code="geocatch.author.label" default="Author" /></span>
 					
-						<span class="property-value" aria-labelledby="author-label"><g:link controller="user" action="show" id="${geocatchInstance?.author?.id}">${geocatchInstance?.author?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="author-label"><g:link controller="user" action="show" id="${geocatchInstance?.author?.id}">${geocatchInstance?.author?.username.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -71,13 +78,13 @@
 					<span id="visitors-label" class="property-label"><g:message code="geocatch.visitors.label" default="Visitors" /></span>
 					
 						<g:each in="${geocatchInstance.visitors}" var="v">
-						<span class="property-value" aria-labelledby="visitors-label"><g:link controller="user" action="show" id="${v.id}">${v?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="visitors-label"><g:link controller="user" action="show" id="${v.id}">${v?.username.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${geocatchInstance?.radius}">
+				<g:if test="${geocatchInstance?.radius && currUser == geocatchInstance.author}">
 				<li class="fieldcontain">
 					<span id="radius-label" class="property-label"><g:message code="geocatch.radius.label" default="Radius" /></span>
 					
@@ -86,16 +93,17 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${geocatchInstance?.lat}">
+				<g:if test="${geocatchInstance?.lat && currUser == geocatchInstance.author}">
 				<li class="fieldcontain">
 					<span id="lat-label" class="property-label"><g:message code="geocatch.lat.label" default="Lat" /></span>
 					
 						<span class="property-value" aria-labelledby="lat-label"><g:fieldValue bean="${geocatchInstance}" field="lat"/></span>
 					
+					
 				</li>
 				</g:if>
 			
-				<g:if test="${geocatchInstance?.lon}">
+				<g:if test="${geocatchInstance?.lon && currUser == geocatchInstance.author}">
 				<li class="fieldcontain">
 					<span id="lon-label" class="property-label"><g:message code="geocatch.lon.label" default="Lon" /></span>
 					
@@ -103,6 +111,8 @@
 					
 				</li>
 				</g:if>
+				
+				<div id="map" style="width: 500px; height: 300px"></div>
 			
 			</ol>
 			<g:form url="[resource:geocatchInstance, action:'delete']" method="DELETE">
@@ -113,5 +123,32 @@
 				</fieldset>
 			</g:form>
 		</div>
+		
+		<script>
+
+			var map;
+			function initMap() {
+			  map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: ${geocatchInstance.lat}, lng: ${geocatchInstance.lon}},
+				zoom: 12
+			  });
+			  
+			var cityCircle = new google.maps.Circle({
+				strokeColor: '#FF0000',
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				fillColor: '#FF0000',
+				fillOpacity: 0.35,
+				map: map,
+				center: map.center,
+				radius: ${geocatchInstance.radius}
+			});
+
+			}
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+        async defer></script>
+
+
 	</body>
 </html>
