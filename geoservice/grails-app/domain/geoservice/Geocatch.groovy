@@ -24,10 +24,10 @@ class Geocatch {
 	    title blank: false, unique: true
 		description blank: false
 		address blank: true, nullable: true
-		picture nullable: true, maxSize: 32768
+		picture nullable: true, maxSize: 1000000000
 		author nullable: false, display: false
 		visitors nullable: true, display: false
 		author display: false, nullable: true
-		radius nullable: true, max: 50, min: 1
+		radius nullable: true, max: 350, min: 1
     }
 }

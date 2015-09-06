@@ -60,6 +60,7 @@
 				<g:if test="${geocatchInstance?.picture}">
 				<li class="fieldcontain">
 					<span id="picture-label" class="property-label"><g:message code="geocatch.picture.label" default="Picture" /></span>
+					<img  src="${createLink(controller:'geocatch', action:'showPhoto', params: [id:geocatchInstance.id])}"  width='300' />
 					
 				</li>
 				</g:if>
@@ -113,6 +114,7 @@
 				</g:if>
 				
 				<div id="map" style="width: 500px; height: 300px"></div>
+
 			
 			</ol>
 			<g:form url="[resource:geocatchInstance, action:'delete']" method="DELETE">

@@ -8,7 +8,7 @@ import grails.plugin.springsecurity.annotation.Secured
 @Transactional(readOnly = true)
 class GeocatchController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
 	def geocoderService
 	
@@ -58,17 +58,27 @@ class GeocatchController {
 		
         geocatchInstance.save flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'geocatchInstance.label', default: 'Geocatch'), geocatchInstance.id])
-                redirect geocatchInstance
-            }
-            '*' { respond geocatchInstance, [status: CREATED] }
-        }
+        flash.message = message(code: 'default.created.message', args: [message(code: 'geocatchInstance.label', default: 'Geocatch'), geocatchInstance.id])
+		redirect action: "index", method: "GET"
+
     }
 
     def edit(Geocatch geocatchInstance) {
-        respond geocatchInstance
+	
+		def currUser = springSecurityService.currentUser
+	
+		if(geocatchInstance.author != currUser){
+			request.withFormat {
+				form {
+					flash.message = "You are not authorized to change this item"
+					redirect action: "index", method: "GET"
+				}
+				'*'{ render status: NOT_FOUND }
+			}
+			return
+		}else{
+		        respond geocatchInstance
+		}
     }
 
     @Transactional
@@ -85,29 +95,55 @@ class GeocatchController {
 
         geocatchInstance.save flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Geocatch.label', default: 'Geocatch'), geocatchInstance.id])
-                redirect geocatchInstance
-            }
-            '*'{ respond geocatchInstance, [status: OK] }
-        }
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'Geocatch.label', default: 'Geocatch'), geocatchInstance.id])
+		redirect action: "index", method: "GET"
+
     }
 	
 	@Transactional
 	def markAsVisited(Geocatch geocatchInstance){
 		def currUser = springSecurityService.currentUser
 	
-		geocatchInstance.addToVisitors(currUser)
-		geocatchInstance.save flush:true
+		if(geocatchInstance.visitors.id.contains(currUser)){
+			flash.message = "you already visited this place!"
+			redirect action: "index", method: "GET"
+		}else{
+			geocatchInstance.addToVisitors(currUser)
+			geocatchInstance.save flush:true
 		
-		render geocatchInstance.author
+			flash.message = "Operation succesful!"
+			redirect action: "index", method: "GET"
+		}
+
+		
+	}
+	
+	def showPhoto() {
+		//response.contentType = "image/jpeg"
+		//response.contentLength = geocatchInstance?.picture.length
+		//response.outputStream.write(geocatchInstance?.picture)
+		def geocatchInstance = Geocatch.get(params.id)
+		response.outputStream << geocatchInstance.picture // write the image to the outputstream
+		response.outputStream.flush()
 		
 	}
 
     @Transactional
     def delete(Geocatch geocatchInstance) {
 
+		def currUser = springSecurityService.currentUser	
+	
+		if(geocatchInstance.author != currUser){
+			request.withFormat {
+				form {
+					flash.message = "You are not authorized to delete this item"
+					redirect action: "index", method: "GET"
+				}
+				'*'{ render status: NOT_FOUND }
+			}
+			return
+		}
+	
         if (geocatchInstance == null) {
             notFound()
             return

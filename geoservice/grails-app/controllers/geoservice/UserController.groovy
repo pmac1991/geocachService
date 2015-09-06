@@ -11,9 +11,11 @@ import grails.plugin.springsecurity.annotation.Secured
 @Transactional(readOnly = true)
 class UserController {
 
-	static scaffold = true
+	//static scaffold = true
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	
+	def springSecurityService
 
 	@Secured('permitAll')
     def index(Integer max) {
@@ -57,11 +59,25 @@ class UserController {
 
 	@Secured('isAuthenticated()')
     def edit(User userInstance) {
-        respond userInstance
+		def currUser = springSecurityService.currentUser
+	
+		if(userInstance != currUser){
+			request.withFormat {
+				form {
+					flash.message = "You are not authorized to change this item"
+					redirect action: "index", method: "GET"
+				}
+				'*'{ render status: NOT_FOUND }
+			}
+			return
+		}else{
+		        respond userInstance
+		}
     }
 
     @Transactional
     def update(User userInstance) {
+	
         if (userInstance == null) {
             notFound()
             return
@@ -86,20 +102,41 @@ class UserController {
     @Transactional
     def delete(User userInstance) {
 
+		def currUser = springSecurityService.currentUser
+	
+		if(userInstance != currUser){
+			request.withFormat {
+				form {
+					flash.message = "You are not authorized to delete this item"
+					redirect action: "index", method: "GET"
+				}
+				'*'{ render status: NOT_FOUND }
+			}
+			return
+		}
+	
         if (userInstance == null) {
             notFound()
             return
         }
+		
+		Collection<Geocatch> userGeocathces = Geocatch.findAllByAuthor(userInstance);
+		
+		userGeocathces*.delete flush:true
 
         userInstance.delete flush:true
+		
+		redirect(controller: "logout")
+		
+		return
 
-        request.withFormat {
+        /*request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
-        }
+        }*/
     }
 
     protected void notFound() {

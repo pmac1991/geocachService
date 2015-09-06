@@ -34,8 +34,6 @@
 					
 						<th><g:message code="geocatch.author.label" default="Author" /></th>
 					
-						<g:sortableColumn property="radius" title="${message(code: 'geocatch.radius.label', default: 'Radius')}" />
-					
 					</tr>
 				</thead>
 				<tbody>
@@ -48,11 +46,9 @@
 					
 						<td>${fieldValue(bean: geocatchInstance, field: "address")}</td>
 					
-						<td>${fieldValue(bean: geocatchInstance, field: "picture")}</td>
+						<td><img  src="${createLink(controller:'geocatch', action:'showPhoto', params: [id:geocatchInstance.id])}"  width='80' heigh='80' /></td>
 					
-						<td>${fieldValue(bean: geocatchInstance, field: "author")}</td>
-					
-						<td>${fieldValue(bean: geocatchInstance, field: "radius")}</td>
+						<td>${geocatchInstance.author.username.encodeAsHTML()}</td>
 					
 					</tr>
 				</g:each>

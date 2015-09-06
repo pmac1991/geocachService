@@ -39,7 +39,7 @@
 		<g:message code="geocatch.radius.label" default="Radius" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="radius" type="number" min="1" max="50" value="${geocatchInstance.radius}" required=""/>
+	<g:field name="radius" type="number" min="1" max="350" value="${geocatchInstance.radius}" required=""/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: geocatchInstance, field: 'lat', 'error')} required">

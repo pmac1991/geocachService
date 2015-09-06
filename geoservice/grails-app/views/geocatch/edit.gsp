@@ -27,7 +27,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:geocatchInstance, action:'update']" method="PUT"  enctype="multipart/form-data">
+			<g:form url="[resource:geocatchInstance, action:'update']" method="POST"  enctype="multipart/form-data">
 				<g:hiddenField name="version" value="${geocatchInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
