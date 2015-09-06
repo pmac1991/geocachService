@@ -15,4 +15,9 @@ class MisccontrollerController {
 		
 		redirect controller: "user", action: "show", id: currUser.id
 	}
+	
+	def showUsersGeocach(Integer max){
+		params.max = Math.min(max ?: 10, 100)
+        respond Geocatch.list(params), model:[geocatchInstanceCount: Geocatch.count()]
+	}
 }

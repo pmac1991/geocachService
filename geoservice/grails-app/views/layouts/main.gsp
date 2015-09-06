@@ -21,7 +21,7 @@
 		<div id="serviceLogo" role="banner"><a href="${grailsApplication.config.grails.serverURL}"><img src="${resource(dir: 'images', file: 'geoLogo_long.png')}" alt="Grails"/></a>
 			<div align = "right">
 				<sec:ifLoggedIn>
-				Hello there <sec:loggedInUserInfo field="username"/> ! | <g:link controller='logout' action='auth'>Logout</g:link>
+				Hello there <sec:loggedInUserInfo field="username"/> ! | <g:link controller='logout'>Logout</g:link>
 				</sec:ifLoggedIn>
 				<sec:ifNotLoggedIn>
 				Please <g:link controller='login' action='auth'>Login</g:link> or <g:link controller='user' action='create'>create</g:link> new account.

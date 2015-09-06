@@ -25,6 +25,31 @@ class GeocatchController {
         //respond geocatchInstance, currUser
 		[geocatchInstance: geocatchInstance, currUser: currUser]
     }
+	
+	def showGeocachCreatedByCurrUser() {
+		def currUser = springSecurityService.currentUser
+	
+		def result = Geocatch.findAllByAuthor(currUser)
+	
+		respond result, model:[geocatchInstanceCount: Geocatch.countByAuthor(currUser)], view:'index'
+    }
+	
+	def showGeocachVisitedByCurrUser() {
+		def currUser = springSecurityService.currentUser
+	
+		def result = Geocatch.findAll
+	
+		for(Geocatch g: result ){
+			if(g.visitors.contains(currUser)){
+			
+			
+			
+			}
+		}
+	
+		respond result, model:[geocatchInstanceCount: Geocatch.countByAuthor(currUser)], view:'index'
+    }
+	
 
     def create() {
         respond new Geocatch(params)

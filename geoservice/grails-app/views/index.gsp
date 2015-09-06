@@ -86,7 +86,7 @@
 			<h1>Application map</h1>
 				<ul>
 					<li>
-						<a href="${createLink(controller: 'geocatch')}">All geocaches</a>
+						<a href="${createLink(controller: 'geocatch', action:'index')}">All geocaches</a>
 					</li>
 					<li>
 						<a href="${createLink(controller: 'user')}">All users</a>
@@ -96,10 +96,13 @@
 				<h1><sec:loggedInUserInfo field="username"/> </h1>
 				<ul>
 					<li>
-						<a href="${createLink(controller: 'geocatch')}">My geocaches</a>
+						<a href="${createLink(controller: 'geocatch', action:'showGeocachCreatedByCurrUser' )}">My geocaches</a>
 					</li>
 					<li>
 						<a href="${createLink(controller:'Misccontroller')}">My profile</a>
+					</li>
+					<li>
+						<a href="${createLink(controller:'geocatch', action:'showGeocachVisitedByCurrUser')}">Geocahces visited by me</a>
 					</li>
 				</ul>
 			</sec:ifLoggedIn>
@@ -112,7 +115,7 @@
 			   </p>
 
 			<div id="controller-list" role="navigation">
-				<h2>Available Controllers:</h2>
+				<h2></h2>
 			</div>
 		</div>
 	</body>
