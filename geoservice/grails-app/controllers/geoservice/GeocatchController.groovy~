@@ -49,7 +49,7 @@ class GeocatchController {
 			}
 		}
 	
-		respond finalResult, model:[geocatchInstanceCount: finalResult.size()], view:'index'
+		respond finalResult, model:[geocatchInstanceCount: Geocatch.countByAuthor(currUser)], view:'index'
     }
 	
 
